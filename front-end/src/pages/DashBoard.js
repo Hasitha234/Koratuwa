@@ -1,48 +1,84 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+// src/pages/Home.js
+import React from 'react';
+import backgroundImage from '../images/pratiksha-mohanty-BwpKvFuPm_U-unsplash.jpg'; // Adjust the path as needed
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+function Home() {
+  const styles = {
+    container: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      position: 'relative',
+      zIndex: 0,
+    },
+    overlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(345, 345, 345, 0.1)', // Light gray with transparency
+      zIndex: 1,
+    },
+    buttonContainer: {
+      display: 'flex',
+      gap: '20px', // Space between bu.ttons
+      zIndex: 2,
+    },
+    button: {
+      width: '250px',
+      height: '250px',
+      backgroundColor: '#F2E7DC', // Button color
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '10px',
+      border: 'none',
+      color: 'black',
+      fontSize: '24px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      transition: 'background-color 0.3s ease', // Smooth hover transition
+    },
+    buttonHover: {
+      backgroundColor: '#e6993b', // Darker shade for hover
+    },
+  };
 
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        Word of the Day
-      </Typography>
-      <Typography variant="h5" component="div">
-        be{bull}nev{bull}o{bull}lent
-      </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        adjective
-      </Typography>
-      <Typography variant="body2">
-        well meaning and kindly.
-        <br />
-        {'"a benevolent smile"'}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">Learn More</Button>
-    </CardActions>
-  </React.Fragment>
-);
-
-export default function OutlinedCard() {
   return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">{card}</Card>
-    </Box>
+    <div style={styles.container}>
+      <div style={styles.overlay}></div> {/* Transparent overlay */}
+      <div style={styles.buttonContainer}>
+        <button
+          style={styles.button}
+          onClick={() => window.location.href = '/MainStore'}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.buttonHover.backgroundColor}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = styles.button.backgroundColor}
+        >
+          Main Store
+        </button>
+        <button
+          style={styles.button}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.buttonHover.backgroundColor}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = styles.button.backgroundColor}
+        >
+          Packing Store
+        </button>
+        <button
+          style={styles.button}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.buttonHover.backgroundColor}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = styles.button.backgroundColor}
+        >
+          Delivery
+        </button>
+      </div>
+    </div>
   );
 }
+
+export default Home;
