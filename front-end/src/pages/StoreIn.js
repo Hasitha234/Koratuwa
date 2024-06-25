@@ -6,6 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import axios
 
 const cardsData = [
   { title: "Chilli pods" },
@@ -31,13 +32,13 @@ const cardsData = [
 
 const StoreIn = () => {
   const [formValuesStoreIn, setFormValuesStoreIn] = useState({
-    spiceType: "",
-    storeKeeperName: "",
-    quantity: "",
-    totalPrice: "",
-    rate: "",
-    company: "",
-    remarks: "",
+    stockSpicesTypeIn: "",
+    storeKeeperIn: "",
+    quantityIn: "",
+    totalPriceIn: "",
+    rateIn: "",
+    companyIn: "",
+    remarkIn: "",
   });
 
   const navigate = useNavigate(); // Use the hook
@@ -47,106 +48,121 @@ const StoreIn = () => {
     setFormValuesStoreIn({ ...formValuesStoreIn, [name]: value });
   };
 
-  const handleSubmitStoreIn = (event) => {
+  const handleSubmitStoreIn = async (event) => {
     event.preventDefault();
-    // Handle form submission for Store In here (e.g., send data to API)
-    console.log(formValuesStoreIn);
-    navigate('/'); // Navigate back to the main store page
+    // Add storeType to the form data
+    const dataToSend = { storeType: "IN", ...formValuesStoreIn };
+    try {
+      await axios.post('http://localhost:9011/api/main-store/save', dataToSend);
+       
+    } catch (error) {
+      console.error("Error saving data to the database:", error);
+      // Handle error appropriately here (e.g., show a message to the user)
+    }
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        padding: "20px",
-      }}
-    >
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Store In
-      </Typography>
+    <div>
       <Box
-        component="form"
-        onSubmit={handleSubmitStoreIn}
-        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          padding: "20px",
+        }}
       >
-        <TextField
-          select
-          label="Spice Type"
-          name="spiceType"
-          value={formValuesStoreIn.spiceType}
-          onChange={handleChangeStoreIn}
-          fullWidth
-          required
+        <Typography variant="h4" sx={{ marginBottom: "20px", padding: "40px"}}>
+          Store In
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmitStoreIn}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
-          {cardsData.map((option) => (
-            <MenuItem key={option.title} value={option.title}>
-              {option.title}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          label="Store Keeper Name"
-          name="storeKeeperName"
-          value={formValuesStoreIn.storeKeeperName}
-          onChange={handleChangeStoreIn}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Quantity"
-          name="quantity"
-          type="number"
-          value={formValuesStoreIn.quantity}
-          onChange={handleChangeStoreIn}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Total Price"
-          name="totalPrice"
-          type="number"
-          value={formValuesStoreIn.totalPrice}
-          onChange={handleChangeStoreIn}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Rate"
-          name="rate"
-          type="number"
-          value={formValuesStoreIn.rate}
-          onChange={handleChangeStoreIn}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Company Name"
-          name="company"
-          value={formValuesStoreIn.company}
-          onChange={handleChangeStoreIn}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Remarks"
-          name="remarks"
-          value={formValuesStoreIn.remarks}
-          onChange={handleChangeStoreIn}
-          fullWidth
-          required
-        />
-        <DialogActions>
-          <Button onClick={() => navigate('/')} color="primary">
-            Cancel
-          </Button>
-          <Button type="submit" color="primary">
-            Submit
-          </Button>
-        </DialogActions>
+          <TextField
+            select
+            label="Spice Type"
+            name="stockSpicesTypeIn"
+            id="stockSpicesTypeIn"
+            value={formValuesStoreIn.stockSpicesTypeIn}
+            onChange={handleChangeStoreIn}
+            fullWidth
+            required
+          >
+            {cardsData.map((option) => (
+              <MenuItem key={option.title} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            label="Store Keeper Name"
+            name="storeKeeperIn"
+            id="storeKeeperIn"
+            value={formValuesStoreIn.storeKeeperIn}
+            onChange={handleChangeStoreIn}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Quantity"
+            name="quantityIn"
+            id="quantityIn"
+            type="number"
+            value={formValuesStoreIn.quantityIn}
+            onChange={handleChangeStoreIn}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Total Price"
+            name="totalPriceIn"
+            id="totalPriceIn"
+            type="number"
+            value={formValuesStoreIn.totalPriceIn}
+            onChange={handleChangeStoreIn}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Rate"
+            name="rateIn"
+            id="rateIn"
+            type="number"
+            value={formValuesStoreIn.rateIn}
+            onChange={handleChangeStoreIn}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Company Name"
+            name="companyIn"
+            id="companyIn"
+            value={formValuesStoreIn.companyIn}
+            onChange={handleChangeStoreIn}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Remarks"
+            name="remarkIn"
+            id="remarkIn"
+            value={formValuesStoreIn.remarkIn}
+            onChange={handleChangeStoreIn}
+            fullWidth
+            required
+          />
+          <DialogActions>
+            <Button onClick={() => navigate('/')} color="primary">
+              Cancel
+            </Button>
+            <Button type="submit" color="primary">
+              Submit
+            </Button>
+          </DialogActions>
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
 
