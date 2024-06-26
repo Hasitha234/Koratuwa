@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const cardsData = [
   { title: "Chilli pods" },
@@ -44,11 +44,39 @@ const StoreOut = () => {
     setFormValuesStoreOut({ ...formValuesStoreOut, [name]: value });
   };
 
-  const handleSubmitStoreOut = (event) => {
+  const handleSubmitStoreOut = async (event) => {
     event.preventDefault();
-    // Handle form submission for Store Out here (e.g., send data to API)
-    console.log(formValuesStoreOut);
-    navigate('/'); // Navigate back to the main store page
+
+    const data = {
+      storeType: "OUT",
+      stockSpicesTypeOut: formValuesStoreOut.spiceType,
+      storeKeeperOut: formValuesStoreOut.storeKeeperName,
+      quantityOut: parseInt(formValuesStoreOut.quantity, 10),
+      remarkOut: formValuesStoreOut.remarks,
+    };
+
+    try {
+      const response = await fetch(
+        "https://diplomatic-beauty-production.up.railway.app/api/main-store/save",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("Success:", result);
+      navigate(); // Navigate back to the main store page
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -109,7 +137,7 @@ const StoreOut = () => {
           required
         />
         <DialogActions>
-          <Button onClick={() => navigate('/')} color="primary">
+          <Button onClick={() => navigate()} color="primary">
             Cancel
           </Button>
           <Button type="submit" color="primary">

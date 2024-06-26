@@ -53,7 +53,7 @@ const StoreIn = () => {
     // Add storeType to the form data
     const dataToSend = { storeType: "IN", ...formValuesStoreIn };
     try {
-      await axios.post('http://localhost:9011/api/main-store/save', dataToSend);
+      await axios.post('https://diplomatic-beauty-production.up.railway.app/api/main-store/save', dataToSend);
        
     } catch (error) {
       console.error("Error saving data to the database:", error);

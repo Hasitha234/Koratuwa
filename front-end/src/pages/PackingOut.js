@@ -1,4 +1,3 @@
-// src/PackingOut.js
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -53,11 +52,37 @@ const PackingOut = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission for Store Out here (e.g., send data to API)
-    console.log(formValues);
-    navigate('/');
+
+    const data = {
+      deliveryOrNot: "No",
+      storePackingTypeOut: formValues.packingType,
+      packetTypeOut: formValues.packetType,
+      packetQuantityOut: formValues.packetQuantity,
+      nameOut: formValues.name,
+      remarkOut: formValues.remark,
+    };
+
+    try {
+      const response = await fetch("https://diplomatic-beauty-production.up.railway.app/api/packing-store/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("Success:", result);
+      navigate('/'); // Navigate back to the main store page
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (

@@ -1,4 +1,3 @@
-// src/PackingIn.js
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -59,11 +58,39 @@ const PackingIn = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission for Store In here (e.g., send data to API)
-    console.log(formValues);
-    navigate('/');
+
+    const data = {
+      deliveryOrNot: "Yes",
+      storePackingTypeIn: formValues.packingType,
+      OutSpicesQuantity: parseFloat(formValues.spicesQuantity),
+      packetTypeIn: formValues.packetType,
+      grindQuantity: parseFloat(formValues.grindQuantity),
+      packetQuantityIn: formValues.packetQuantity,
+      nameIn: formValues.name,
+      remarkIn: formValues.remark,
+    };
+
+    try {
+      const response = await fetch("https://diplomatic-beauty-production.up.railway.app/api/packing-store/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("Success:", result);
+      navigate(); // Navigate back to the main store page
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -161,7 +188,7 @@ const PackingIn = () => {
           fullWidth
         />
         <DialogActions>
-          <Button onClick={() => navigate('/')} color="primary">
+          <Button onClick={() => navigate()} color="primary">
             Cancel
           </Button>
           <Button type="submit" color="primary">
