@@ -12,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 
-const PackCurryPowder = () => {
+const PackChilliPieces = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -30,10 +30,14 @@ const PackCurryPowder = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  const renderValue = (value) => {
+    return value === 0 ? "-" : value;
+  };
+
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Curry Powder
+      Curry Powder
       </Typography>
       <Button variant="contained" color="primary" onClick={() => navigate("/PackingStore")}>
         Back to Store
@@ -42,11 +46,11 @@ const PackCurryPowder = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Delivery Or Not</TableCell>
+              <TableCell>Store Type</TableCell>
               <TableCell>Stock Spices Type</TableCell>
               <TableCell>Out Spices Quantity</TableCell>
-              <TableCell>Packet Type</TableCell>
               <TableCell>Grind Quantity</TableCell>
+              <TableCell>Packet Type</TableCell>
               <TableCell>Packet Quantity</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Remark</TableCell>
@@ -61,14 +65,15 @@ const PackCurryPowder = () => {
                   {row.deliveryOrNot === "No"||"Yes" ? row.storePackingTypeIn : row.storePackingTypeOut}
                 </TableCell>
                 <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? row.outSpicesQuantity : row.outSpicesQuantity}
+                  {row.outSpicesQuantity ? renderValue(row.grindQuantity) : "-"}
+                </TableCell>
+                <TableCell>
+                  {row.deliveryOrNot === "No"||"Yes" ? renderValue(row.grindQuantity) : "-"}
                 </TableCell>
                 <TableCell>
                   {row.deliveryOrNot === "No"||"Yes" ? row.packetTypeIn : row.packetTypeOut}
                 </TableCell>
-                <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? row.grindQuantity : 0}
-                </TableCell>
+                
                 <TableCell>
                   {row.deliveryOrNot === "No"||"Yes" ? row.packetQuantityIn : row.packetQuantityOut}
                 </TableCell>
@@ -79,8 +84,8 @@ const PackCurryPowder = () => {
                   {row.deliveryOrNot === "No"||"Yes" ? row.remarkIn : row.remarkOut}
                 </TableCell>
                 <TableCell>
-                  {row.createdAt ? new Date(row.createdAt).toLocaleDateString() : "Invalid Date"}
-                </TableCell>
+  {new Date(row.createdAt).toLocaleDateString('en-US')}
+</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -90,4 +95,4 @@ const PackCurryPowder = () => {
   );
 };
 
-export default PackCurryPowder;
+export default PackChilliPieces;

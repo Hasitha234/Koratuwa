@@ -5,6 +5,10 @@ import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import { useNavigate } from "react-router-dom";
 
 const cardsData = [
@@ -37,6 +41,7 @@ const packetTypes = [
 
 const PackingOut = () => {
   const [formValues, setFormValues] = useState({
+    delivery:"",
     packingType: "",
     spicesQuantity: "",
     packetType: "",
@@ -56,7 +61,7 @@ const PackingOut = () => {
     event.preventDefault();
 
     const data = {
-      deliveryOrNot: "No",
+      deliveryOrNot: formValues.delivery,
       storePackingTypeOut: formValues.packingType,
       packetTypeOut: formValues.packetType,
       packetQuantityOut: formValues.packetQuantity,
@@ -95,6 +100,19 @@ const PackingOut = () => {
         onSubmit={handleSubmit}
         sx={{ display: "flex", flexDirection: "column", gap: 2 }}
       >
+        <FormControl component="fieldset">
+          <Typography></Typography>
+          <RadioGroup
+            row
+            name="delivery"
+            value={formValues.delivery}
+            onChange={handleChange}
+          >
+            <FormControlLabel value="Delivery" control={<Radio />} label="Delivery" />
+            
+          </RadioGroup>
+        </FormControl>
+
         <TextField
           select
           label="Packing Type"

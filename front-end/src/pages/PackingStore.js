@@ -104,7 +104,7 @@ const PackingStore = () => {
       </Box>
 
       {/* Footer section */}
-      <Box
+      {/* <Box
         sx={{
           marginTop: "auto",
           borderTop: "1px solid #ccc",
@@ -112,23 +112,30 @@ const PackingStore = () => {
           display: "flex",
           justifyContent: "flex-end",
         }}
-      >
+      > */}
         <Button
-          variant="contained"
-          color="primary"
-          sx={{ marginRight: "10px" }}
-          onClick={() => navigate("/packing-in")}
-        >
-          Packing Store In
-        </Button>
-        <Button
+  variant="contained"
+  color="primary"
+  sx={{
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+    zIndex: 1000, // Ensures it's above other elements if there are overlays
+  }}
+  onClick={() => navigate("/packing-in")}
+>
+  Update Packing Store
+</Button>
+
+        
+        {/* <Button
           variant="contained"
           color="secondary"
           onClick={() => navigate("/packing-out")}
         >
           Packing Store Out
-        </Button>
-      </Box>
+        </Button> */}
+      {/* </Box> */}
     </Box>
   );
 };

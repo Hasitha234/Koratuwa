@@ -41,7 +41,7 @@ const packetTypes = [
 
 const PackingIn = () => {
   const [formValues, setFormValues] = useState({
-    delivery: "no",
+    delivery: "Direct",
     packingType: "",
     spicesQuantity: "",
     packetType: "",
@@ -62,9 +62,9 @@ const PackingIn = () => {
     event.preventDefault();
 
     const data = {
-      deliveryOrNot: formValues.delivery === 'yes' ? "Yes" : "No",
+      deliveryOrNot: formValues.delivery,
       storePackingTypeIn: formValues.packingType,
-      OutSpicesQuantity: parseFloat(formValues.spicesQuantity),
+      outSpicesQuantity: parseFloat(formValues.spicesQuantity),
       packetTypeIn: formValues.packetType,
       grindQuantity: parseFloat(formValues.grindQuantity),
       packetQuantityIn: formValues.packetQuantity,
@@ -75,7 +75,7 @@ const PackingIn = () => {
     try {
       const response = await fetch("https://diplomatic-beauty-production.up.railway.app/api/packing-store/save", {
         method: "POST",
-        headers: {
+        headers: { 
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
@@ -96,7 +96,7 @@ const PackingIn = () => {
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Packing Store In
+        Packing Store
       </Typography>
       <Box
         component="form"
@@ -104,17 +104,19 @@ const PackingIn = () => {
         sx={{ display: "flex", flexDirection: "column", gap: 2 }}
       >
         <FormControl component="fieldset">
-          <Typography>Delivery</Typography>
+          
           <RadioGroup
             row
             name="delivery"
             value={formValues.delivery}
             onChange={handleChange}
           >
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel value="Direct" control={<Radio />} label="Direct" />
+            <FormControlLabel value="Return" control={<Radio />} label="Return" />
+            <FormControlLabel value="Delivery" control={<Radio />} label="Delivery" />
           </RadioGroup>
         </FormControl>
+        
         <TextField
           select
           label="Packing Type"
@@ -130,15 +132,30 @@ const PackingIn = () => {
             </MenuItem>
           ))}
         </TextField>
-        <TextField
-          label="Out Spices Quantity"
-          name="spicesQuantity"
-          type="number"
-          value={formValues.spicesQuantity}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
+
+        {formValues.delivery === "Direct" && (
+          <>
+            <TextField
+              label="Out Spices Quantity"
+              name="spicesQuantity"
+              type="number"
+              value={formValues.spicesQuantity}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+            <TextField
+              label="Grind Quantity"
+              name="grindQuantity"
+              type="number"
+              value={formValues.grindQuantity}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+          </>
+        )}
+
         <TextField
           select
           label="Packet Type"
@@ -154,15 +171,7 @@ const PackingIn = () => {
             </MenuItem>
           ))}
         </TextField>
-        <TextField
-          label="Grind Quantity"
-          name="grindQuantity"
-          type="number"
-          value={formValues.grindQuantity}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
+
         <TextField
           label="Packet Quantity"
           name="packetQuantity"
@@ -196,7 +205,7 @@ const PackingIn = () => {
             variant="contained"
             color="secondary"
           >
-            Cancel
+            Back
           </Button>
         </DialogActions>
       </Box>
