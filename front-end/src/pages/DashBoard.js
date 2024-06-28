@@ -1,6 +1,7 @@
 // src/pages/Home.js
 import React from "react";
-import backgroundImage from "../images/pratiksha-mohanty-BwpKvFuPm_U-unsplash.jpg"; // Adjust the path as needed
+import backgroundImage from "../images/123.jpg"; // Adjust the path as needed
+import ResponsiveAppBar from "../components/Header";
 
 function Home() {
   const styles = {
@@ -46,11 +47,13 @@ function Home() {
       transition: "background-color 0.3s ease", // Smooth hover transition
     },
     buttonHover: {
-      backgroundColor: "#e6993b", // Darker shade for hover
+      backgroundColor: "#634F0C", // Darker shade for hover
     },
   };
 
   return (
+    <>
+    <ResponsiveAppBar />
     <div style={styles.container}>
       <div style={styles.overlay}></div> {/* Transparent overlay */}
       <div style={styles.buttonContainer}>
@@ -93,10 +96,11 @@ function Home() {
               styles.button.backgroundColor)
           }
         >
-          Delivery
+          Billing
         </button>
       </div>
     </div>
+    </>
   );
 }
 

@@ -63,7 +63,7 @@ function Login() {
   return (
     <div style={styles.container}>
       <div style={styles.form}>
-        <h1>Welcome</h1>
+        <h1>WELCOME TO   KORATUWA  CEYLON PRODUCTS (PVT) LTD</h1>
         <input 
           type="text" 
           placeholder="User Name" 

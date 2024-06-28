@@ -6,10 +6,12 @@ import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
+import Chip from "@mui/material/Chip";
+import Alert from "@mui/material/Alert";
+import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "../components/Header";
+import backgroundImage from "../images/123.jpg"; // import the background image
 
 const cardsData = [
   { title: "Chilli Pieces" },
@@ -50,12 +52,17 @@ const PackingIn = () => {
     name: "",
     remark: "",
   });
+  const [alertVisible, setAlertVisible] = useState(false);
 
   const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleChipClick = (value) => {
+    setFormValues({ ...formValues, delivery: value });
   };
 
   const handleSubmit = async (event) => {
@@ -87,129 +94,180 @@ const PackingIn = () => {
 
       const result = await response.json();
       console.log("Success:", result);
-      navigate("/PackingStore"); // Navigate back to the PackingStore page
+      setAlertVisible(true);
+      setTimeout(() => {
+        setAlertVisible(false);
+        navigate("/PackingStore"); // Navigate back to the PackingStore page
+      }, 3000); // Hide the alert after 3 seconds
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <Box sx={{ padding: "20px" }}>
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Packing Store
-      </Typography>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+    <>
+    <ResponsiveAppBar />
+    <Box 
+      sx={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '100vh', 
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <Box 
+        sx={{ 
+          backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+          padding: '20px', 
+          borderRadius: '10px',
+          maxWidth: '600px',
+          width: '100%',
+        }}
       >
-        <FormControl component="fieldset">
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Packing Store
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        >
+          <FormControl component="fieldset">
+            <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+              <Chip 
+                label="Direct" 
+                onClick={() => handleChipClick("Direct")} 
+                sx={{ backgroundColor: formValues.delivery === "Direct" ? '#A38214' : 'default', color: formValues.delivery === "Direct" ? 'white' : 'default' }}
+              />
+              <Chip 
+                label="Return" 
+                onClick={() => handleChipClick("Return")} 
+                sx={{ backgroundColor: formValues.delivery === "Return" ? '#A38214' : 'default', color: formValues.delivery === "Return" ? 'white' : 'default' }}
+              />
+              <Chip 
+                label="Delivery" 
+                onClick={() => handleChipClick("Delivery")} 
+                sx={{ backgroundColor: formValues.delivery === "Delivery" ? '#A38214' : 'default', color: formValues.delivery === "Delivery" ? 'white' : 'default' }}
+              />
+            </Box>
+          </FormControl>
           
-          <RadioGroup
-            row
-            name="delivery"
-            value={formValues.delivery}
+          <TextField
+            select
+            label="Packing Type"
+            name="packingType"
+            value={formValues.packingType}
             onChange={handleChange}
+            fullWidth
+            required
           >
-            <FormControlLabel value="Direct" control={<Radio />} label="Direct" />
-            <FormControlLabel value="Return" control={<Radio />} label="Return" />
-            <FormControlLabel value="Delivery" control={<Radio />} label="Delivery" />
-          </RadioGroup>
-        </FormControl>
-        
-        <TextField
-          select
-          label="Packing Type"
-          name="packingType"
-          value={formValues.packingType}
-          onChange={handleChange}
-          fullWidth
-          required
-        >
-          {cardsData.map((option) => (
-            <MenuItem key={option.title} value={option.title}>
-              {option.title}
-            </MenuItem>
-          ))}
-        </TextField>
+            {cardsData.map((option) => (
+              <MenuItem key={option.title} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
 
-        {formValues.delivery === "Direct" && (
-          <>
-            <TextField
-              label="Out Spices Quantity"
-              name="spicesQuantity"
-              type="number"
-              value={formValues.spicesQuantity}
-              onChange={handleChange}
-              fullWidth
-              required
-            />
-            <TextField
-              label="Grind Quantity"
-              name="grindQuantity"
-              type="number"
-              value={formValues.grindQuantity}
-              onChange={handleChange}
-              fullWidth
-              required
-            />
-          </>
-        )}
+          {formValues.delivery === "Direct" && (
+            <>
+              <TextField
+                label="Out Spices Quantity"
+                name="spicesQuantity"
+                type="number"
+                value={formValues.spicesQuantity}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <TextField
+                label="Grind Quantity"
+                name="grindQuantity"
+                type="number"
+                value={formValues.grindQuantity}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+            </>
+          )}
 
-        <TextField
-          select
-          label="Packet Type"
-          name="packetType"
-          value={formValues.packetType}
-          onChange={handleChange}
-          fullWidth
-          required
-        >
-          {packetTypes.map((option) => (
-            <MenuItem key={option.title} value={option.title}>
-              {option.title}
-            </MenuItem>
-          ))}
-        </TextField>
-
-        <TextField
-          label="Packet Quantity"
-          name="packetQuantity"
-          type="number"
-          value={formValues.packetQuantity}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Name"
-          name="name"
-          value={formValues.name}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Remark"
-          name="remark"
-          value={formValues.remark}
-          onChange={handleChange}
-          fullWidth
-        />
-        <DialogActions>
-          <Button type="submit" variant="contained" color="primary">
-            Save
-          </Button>
-          <Button
-            onClick={() => navigate("/PackingStore")}
-            variant="contained"
-            color="secondary"
+          <TextField
+            select
+            label="Packet Type"
+            name="packetType"
+            value={formValues.packetType}
+            onChange={handleChange}
+            fullWidth
+            required
           >
-            Back
-          </Button>
-        </DialogActions>
+            {packetTypes.map((option) => (
+              <MenuItem key={option.title} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            label="Packet Quantity"
+            name="packetQuantity"
+            type="number"
+            value={formValues.packetQuantity}
+            onChange={handleChange}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Name"
+            name="name"
+            value={formValues.name}
+            onChange={handleChange}
+            fullWidth
+            required
+          />
+          <TextField
+            label="Remark"
+            name="remark"
+            value={formValues.remark}
+            onChange={handleChange}
+            fullWidth
+          />
+          <DialogActions>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              sx={{ backgroundColor: '#A38214', '&:hover': { backgroundColor: '#8A6F12' } }}
+            >
+              Save
+            </Button>
+            <Button
+              onClick={() => navigate("/PackingStore")}
+              variant="contained"
+              sx={{ backgroundColor: '#634F0C', '&:hover': { backgroundColor: '#8A6F12' } }}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </Box>
       </Box>
     </Box>
+    {alertVisible && (
+      <Box 
+        sx={{ 
+          position: 'fixed', 
+          bottom: '20px', 
+          right: '20px', 
+          zIndex: 9999 
+        }}
+      >
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          Here is a gentle confirmation that your action was successful.
+        </Alert>
+      </Box>
+    )}
+    </>
   );
 };
 
