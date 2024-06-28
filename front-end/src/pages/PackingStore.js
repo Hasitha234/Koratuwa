@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../images/dan-burton-lrHpdJ9r7sQ-unsplash.jpg";
+import ResponsiveAppBar from "../components/Header"
 
 const cardsData = [
   { title: "Chilli Pieces", path: "/chilli-pieces" },
@@ -48,6 +49,8 @@ const PackingStore = () => {
   };
 
   return (
+    <>
+    <ResponsiveAppBar/>
     <Box
       sx={{
         display: "flex",
@@ -137,6 +140,7 @@ const PackingStore = () => {
         </Button> */}
       {/* </Box> */}
     </Box>
+    </>
   );
 };
 
