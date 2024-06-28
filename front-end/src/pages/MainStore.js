@@ -33,7 +33,14 @@ const cardsData = [
 const BasicCard = ({ title, onClick }) => (
   <Button
     component={Card}
-    sx={{ minWidth: 275, marginBottom: 2, backgroundColor: "white" }}
+    sx={{
+      minWidth: 275,
+      marginBottom: 2,
+      backgroundColor: "white",
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "center",
+    }}
     onClick={onClick}
   >
     <CardContent>
@@ -61,20 +68,33 @@ const MainStore = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
+        alignItems: "center",
       }}
     >
-      {/* Header section */}
-      <Box sx={{ padding: "20px", borderBottom: "1px solid #ccc" }}>
+      {/* Content wrapper */}
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "1200px",
+          padding: "20px",
+          borderBottom: "1px solid #ccc",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {/* Header section */}
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             marginBottom: "20px",
+            width: "100%",
           }}
         >
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            Spice Store
+          <Typography variant="h2" sx={{ flexGrow: 1 }} align="center">
+            <b>Main Store</b>
           </Typography>
           <Button
             variant="contained"
@@ -86,7 +106,14 @@ const MainStore = () => {
         </Box>
 
         {/* Cards section */}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            justifyContent: "center",
+          }}
+        >
           {cardsData.map((card, index) => (
             <BasicCard
               key={index}
@@ -105,6 +132,8 @@ const MainStore = () => {
           padding: "20px",
           display: "flex",
           justifyContent: "flex-end",
+          width: "100%",
+          maxWidth: "1200px",
         }}
       >
         <Button
@@ -113,14 +142,14 @@ const MainStore = () => {
           sx={{ marginRight: "10px" }}
           onClick={() => navigate("/store-in")}
         >
-          Store In
+          Main Store In
         </Button>
         <Button
           variant="contained"
           color="secondary"
           onClick={() => navigate("/store-out")}
         >
-          Store Out
+          Main Store Out
         </Button>
       </Box>
     </Box>

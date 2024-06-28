@@ -9,24 +9,24 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Import axios
 
 const cardsData = [
-  { title: "Chilli pods" },
-  { title: "Dry yellow" },
-  { title: "Peppercorns" },
-  { title: "Pepper powder" },
+  { title: "Dried Chilli" },
+  { title: "Dried Turmeric" },
+  { title: "Pepper Seeds" },
+  { title: "Pepper Powder" },
   { title: "Cinnamon" },
-  { title: "Snoring" },
-  { title: "Doctor" },
-  { title: "Hinduru" },
+  { title: "Gamboge" },
+  { title: "Fennel Seeds" },
+  { title: "Heenduru" },
   { title: "Coriander" },
   { title: "Mustard" },
   { title: "Fenugreek" },
   { title: "Cardamom" },
-  { title: "Nutmeg flowers" },
+  { title: "Nutmeg Flowers" },
   { title: "Nutmeg" },
   { title: "Cloves" },
-  { title: "Cinnamon sticks" },
-  { title: "Ginger flakes" },
-  { title: "Lentils" },
+  { title: "Cinnamon Sticks" },
+  { title: "Ginger" },
+  { title: "Dhal" },
   { title: "Rice" },
 ];
 
@@ -53,8 +53,8 @@ const StoreIn = () => {
     // Add storeType to the form data
     const dataToSend = { storeType: "IN", ...formValuesStoreIn };
     try {
-      await axios.post('https://diplomatic-beauty-production.up.railway.app/api/main-store/save', dataToSend);
-       
+      await axios.post('https://diplomatic-beauty-production.up.railway.app/api/main-store/save', dataToSend); // Update API endpoint
+      navigate('/MainStore'); // Navigate to MainStore component after successful submission
     } catch (error) {
       console.error("Error saving data to the database:", error);
       // Handle error appropriately here (e.g., show a message to the user)
@@ -72,7 +72,7 @@ const StoreIn = () => {
         }}
       >
         <Typography variant="h4" sx={{ marginBottom: "20px", padding: "40px"}}>
-          Store In
+          Main Store In
         </Typography>
         <Box
           component="form"
@@ -153,7 +153,7 @@ const StoreIn = () => {
             required
           />
           <DialogActions>
-            <Button onClick={() => navigate('/')} color="primary">
+            <Button onClick={() => navigate('/MainStore')} color="primary">
               Cancel
             </Button>
             <Button type="submit" color="primary">

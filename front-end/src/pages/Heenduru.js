@@ -12,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 
-const DriedChilli = () => {
+const Heenduru = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ const DriedChilli = () => {
       .then((data) => {
         const filteredData = data.filter(
           (item) =>
-            item.stockSpicesTypeIn === "Hinduru" ||
-            item.stockSpicesTypeOut === "Hinduru"
+            item.stockSpicesTypeIn === "Heenduru" ||
+            item.stockSpicesTypeOut === "Heenduru"
         );
         setData(filteredData);
       })
@@ -35,7 +35,7 @@ const DriedChilli = () => {
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Hinduru
       </Typography>
-      <Button variant="contained" color="primary" onClick={() => navigate("/")}>
+      <Button variant="contained" color="primary" onClick={() => navigate("/MainStore")}>
         Back to Store
       </Button>
       <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
@@ -96,4 +96,4 @@ const DriedChilli = () => {
   );
 };
 
-export default DriedChilli;
+export default Heenduru;

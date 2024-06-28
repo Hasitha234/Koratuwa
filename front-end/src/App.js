@@ -32,7 +32,7 @@ import ChilliPowder from "./pages/PackChilliPowder";
 import TurmericPowder from "./pages/PackTurmericPowder";
 import CurryPowder from "./pages/PackCurryPowder";
 import FriedCurryPowder from "./pages/PackFriedCurryPowder";
-import MeatCurryPowder from "./pages/PackMeatCurry"; // Correct import
+import MeatCurryPowder from "./pages/PackMeatCurry";
 import MustardPowder from "./pages/PackMustardPowder";
 import MustardSeeds from "./pages/PackMustardSeeds";
 import TeaPowder from "./pages/PackTeaPowder";
@@ -49,8 +49,9 @@ function App() {
         <Route path="/MainStore" element={<MainStore />} />
         <Route path="/PackingStore" element={<PackingStore />} />
         <Route path="/store-in" element={<StoreIn />} />
-        <Route path="/store-in" element={<PackingIn />} />
-        <Route path="/store-out" element={<StoreOut />} /> {/* Correct route */}
+        <Route path="/packing-in" element={<PackingIn />} />
+        <Route path="/store-out" element={<StoreOut />} />
+        <Route path="/packing-out" element={<PackingOut />} />
         <Route path="/dried-chilli" element={<DriedChilli />} />
         <Route path="/dried-turmeric" element={<DriedTurmeric />} />
         <Route path="/pepper-seeds" element={<PepperSeeds />} />
@@ -75,7 +76,7 @@ function App() {
         <Route path="/turmeric-powder" element={<TurmericPowder />} />
         <Route path="/curry-powder" element={<CurryPowder />} />
         <Route path="/fried-curry-powder" element={<FriedCurryPowder />} />
-        <Route path="/meat-curry-powder" element={<MeatCurryPowder />} /> {/* Correct route */}
+        <Route path="/meat-curry-powder" element={<MeatCurryPowder />} />
         <Route path="/mustard-powder" element={<MustardPowder />} />
         <Route path="/mustard-seeds" element={<MustardSeeds />} />
         <Route path="/tea-powder" element={<TeaPowder />} />

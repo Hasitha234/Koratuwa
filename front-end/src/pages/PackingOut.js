@@ -8,22 +8,22 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 
 const cardsData = [
-  { title: "Chilli pieces" },
-  { title: "Pepper powder" },
-  { title: "Yellow powder" },
-  { title: "Pepper powder" },
-  { title: "Curry powder" },
-  { title: "Fried three and five" },
-  { title: "Muscari" },
-  { title: "Mustard powder" },
-  { title: "Mustard seeds" },
-  { title: "fenugreek" },
+  { title: "Chilli Pieces" },
+  { title: "Chilli Powder" },
+  { title: "Turmeric Powder" },
+  { title: "Pepper Powder" },
+  { title: "Curry Powder" },
+  { title: "Fried Curry Powder" },
+  { title: "Meat Curry Powder" },
+  { title: "Mustard Powder" },
+  { title: "Mustard Seeds" },
+  { title: "Fenugreek" },
   { title: "Cinnamon" },
-  { title: "Snoring" },
-  { title: "Tea powder" },
-  { title: "Caraway vines" },
-  { title: "Cardamom vine" },
-  { title: "Suwada hatha" },
+  { title: "Gamboge" },
+  { title: "Tea Powder" },
+  { title: "Clove Packs" },
+  { title: "Cardamom Packs" },
+  { title: "Suwada Hatha" },
 ];
 
 const packetTypes = [
@@ -79,7 +79,7 @@ const PackingOut = () => {
 
       const result = await response.json();
       console.log("Success:", result);
-      navigate('/'); // Navigate back to the main store page
+      navigate('/PackingStore'); // Navigate back to the main store page
     } catch (error) {
       console.error("Error:", error);
     }
@@ -88,7 +88,7 @@ const PackingOut = () => {
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Store Out
+        Packing Store Out
       </Typography>
       <Box
         component="form"
@@ -159,7 +159,7 @@ const PackingOut = () => {
           fullWidth
         />
         <DialogActions>
-          <Button onClick={() => navigate('/')} color="primary">
+          <Button onClick={() => navigate('/PackingStore')} color="primary">
             Cancel
           </Button>
           <Button type="submit" color="primary">

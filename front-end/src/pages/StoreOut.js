@@ -8,24 +8,24 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 
 const cardsData = [
-  { title: "Chilli pods" },
-  { title: "Dry yellow" },
-  { title: "Peppercorns" },
-  { title: "Pepper powder" },
+  { title: "Dried Chilli" },
+  { title: "Dried Turmeric" },
+  { title: "Pepper Seeds" },
+  { title: "Pepper Powder" },
   { title: "Cinnamon" },
-  { title: "Snoring" },
-  { title: "Doctor" },
-  { title: "Hinduru" },
+  { title: "Gamboge" },
+  { title: "Fennel Seeds" },
+  { title: "Heenduru" },
   { title: "Coriander" },
   { title: "Mustard" },
   { title: "Fenugreek" },
   { title: "Cardamom" },
-  { title: "Nutmeg flowers" },
+  { title: "Nutmeg Flowers" },
   { title: "Nutmeg" },
   { title: "Cloves" },
-  { title: "Cinnamon sticks" },
-  { title: "Ginger flakes" },
-  { title: "Lentils" },
+  { title: "Cinnamon Sticks" },
+  { title: "Ginger" },
+  { title: "Dhal" },
   { title: "Rice" },
 ];
 
@@ -73,9 +73,10 @@ const StoreOut = () => {
 
       const result = await response.json();
       console.log("Success:", result);
-      navigate(); // Navigate back to the main store page
+      navigate('/MainStore'); // Navigate after successful submission
     } catch (error) {
       console.error("Error:", error);
+      // Optionally show an error message to the user
     }
   };
 
@@ -89,7 +90,7 @@ const StoreOut = () => {
       }}
     >
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Store Out
+        Main Store Out
       </Typography>
       <Box
         component="form"
@@ -137,7 +138,7 @@ const StoreOut = () => {
           required
         />
         <DialogActions>
-          <Button onClick={() => navigate()} color="primary">
+          <Button onClick={() => navigate('/MainStore')} color="primary">
             Cancel
           </Button>
           <Button type="submit" color="primary">

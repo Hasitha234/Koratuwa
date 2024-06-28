@@ -14,7 +14,7 @@ const cardsData = [
   { title: "Pepper Powder", path: "/pepper-powder" },
   { title: "Curry Powder", path: "/curry-powder" },
   { title: "Fried Curry Powder", path: "/fried-curry-powder" },
-  { title: "Meat Curry Powder", path: "/meat-curry-powder" }, // Correct path
+  { title: "Meat Curry Powder", path: "/meat-curry-powder" },
   { title: "Mustard Powder", path: "/mustard-powder" },
   { title: "Mustard Seeds", path: "/mustard-seeds" },
   { title: "Fenugreek", path: "/fenugreek" },
@@ -30,7 +30,7 @@ const BasicCard = ({ title, onClick }) => (
   <Button
     component={Card}
     sx={{ minWidth: 275, marginBottom: 2, backgroundColor: "white" }}
-    onClick={onClick} // Add onClick event
+    onClick={onClick}
   >
     <CardContent>
       <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
@@ -69,15 +69,36 @@ const PackingStore = () => {
             marginBottom: "20px",
           }}
         >
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            Spice Store
+          <Typography variant="h2" sx={{ flexGrow: 1 }} align="center">
+            <b>Packing Store</b>
           </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("/home")}
+          >
+            Home
+          </Button>
         </Box>
 
         {/* Cards section */}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "auto",
+            maxWidth: "1200px", // You can adjust the maxWidth as needed
+          }}
+        >
           {cardsData.map((card, index) => (
-            <BasicCard key={index} title={card.title} onClick={() => handleCardClick(card.path)} /> // Pass path to onClick
+            <BasicCard
+              key={index}
+              title={card.title}
+              onClick={() => handleCardClick(card.path)}
+            />
           ))}
         </Box>
       </Box>
@@ -96,16 +117,16 @@ const PackingStore = () => {
           variant="contained"
           color="primary"
           sx={{ marginRight: "10px" }}
-          onClick={() => navigate("/store-in")}
+          onClick={() => navigate("/packing-in")}
         >
-          Store In
+          Packing Store In
         </Button>
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => navigate("/store-out")}
+          onClick={() => navigate("/packing-out")}
         >
-          Store Out
+          Packing Store Out
         </Button>
       </Box>
     </Box>

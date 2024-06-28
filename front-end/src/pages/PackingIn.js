@@ -12,21 +12,21 @@ import RadioGroup from "@mui/material/RadioGroup";
 import { useNavigate } from "react-router-dom";
 
 const cardsData = [
-  { title: "Chilli pieces" },
-  { title: "Pepper powder" },
-  { title: "Yellow powder" },
-  { title: "Pepper powder" },
-  { title: "Curry powder" },
-  { title: "Fried three and five" },
-  { title: "Muscari" },
-  { title: "Mustard powder" },
-  { title: "Mustard seeds" },
-  { title: "fenugreek" },
+  { title: "Chilli Pieces" },
+  { title: "Chilli Powder" },
+  { title: "Turmeric Powder" },
+  { title: "Pepper Powder" },
+  { title: "Curry Powder" },
+  { title: "Fried Curry Powder" },
+  { title: "Meat Curry Powder" },
+  { title: "Mustard Powder" },
+  { title: "Mustard Seeds" },
+  { title: "Fenugreek" },
   { title: "Cinnamon" },
-  { title: "Snoring" },
+  { title: "Gamboge" },
   { title: "Tea powder" },
-  { title: "Caraway vines" },
-  { title: "Cardamom vine" },
+  { title: "Clove Packs" },
+  { title: "Cardamom Packs" },
   { title: "Suwada hatha" },
 ];
 
@@ -62,7 +62,7 @@ const PackingIn = () => {
     event.preventDefault();
 
     const data = {
-      deliveryOrNot: "Yes",
+      deliveryOrNot: formValues.delivery === 'yes' ? "Yes" : "No",
       storePackingTypeIn: formValues.packingType,
       OutSpicesQuantity: parseFloat(formValues.spicesQuantity),
       packetTypeIn: formValues.packetType,
@@ -87,7 +87,7 @@ const PackingIn = () => {
 
       const result = await response.json();
       console.log("Success:", result);
-      navigate(); // Navigate back to the main store page
+      navigate("/PackingStore"); // Navigate back to the PackingStore page
     } catch (error) {
       console.error("Error:", error);
     }
@@ -96,7 +96,7 @@ const PackingIn = () => {
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Store In
+        Packing Store In
       </Typography>
       <Box
         component="form"
@@ -131,7 +131,7 @@ const PackingIn = () => {
           ))}
         </TextField>
         <TextField
-          label="Spices Quantity"
+          label="Out Spices Quantity"
           name="spicesQuantity"
           type="number"
           value={formValues.spicesQuantity}
@@ -188,11 +188,15 @@ const PackingIn = () => {
           fullWidth
         />
         <DialogActions>
-          <Button onClick={() => navigate()} color="primary">
-            Cancel
+          <Button type="submit" variant="contained" color="primary">
+            Save
           </Button>
-          <Button type="submit" color="primary">
-            Submit
+          <Button
+            onClick={() => navigate("/PackingStore")}
+            variant="contained"
+            color="secondary"
+          >
+            Cancel
           </Button>
         </DialogActions>
       </Box>
