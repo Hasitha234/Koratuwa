@@ -22,8 +22,8 @@ const PackChilliPieces = () => {
       .then((data) => {
         const filteredData = data.filter(
           (item) =>
-            item.storePackingTypeIn === "Cloves Pack" ||
-            item.storePackingTypeOut === "Cloves Pack"
+            item.storePackingTypeIn === "Clove Packs" ||
+            item.storePackingTypeOut === "Clove Packs"
         );
         setData(filteredData);
       })

@@ -12,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 
-const PackChilliPieces = () => {
+const PackFenugreek = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ const PackChilliPieces = () => {
       .then((data) => {
         const filteredData = data.filter(
           (item) =>
-            item.storePackingTypeIn === "Fenugreek" ||
-            item.storePackingTypeOut === "Fenugreek"
+            item.storePackingTypeIn === "Fenugreek Pack" ||
+            item.storePackingTypeOut === "Fenugreek Pack"
         );
         setData(filteredData);
       })
@@ -37,7 +37,7 @@ const PackChilliPieces = () => {
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-      Fenugreek
+        Fenugreek
       </Typography>
       <Button variant="contained" color="primary" onClick={() => navigate("/PackingStore")}>
         Back to Store
@@ -95,4 +95,4 @@ const PackChilliPieces = () => {
   );
 };
 
-export default PackChilliPieces;
+export default PackFenugreek;

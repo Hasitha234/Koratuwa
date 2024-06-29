@@ -87,7 +87,7 @@ const Cinnamon = () => {
                   {row.storeType === "IN" ? row.quantityIn : row.quantityOut}
                 </TableCell>
                 <TableCell>
-                  {row.storeType === "IN" ? row.createdAt : row.createdAt}
+                {new Date(row.createdAt).toLocaleDateString('en-US')}
                 </TableCell>
               </TableRow>
             ))}

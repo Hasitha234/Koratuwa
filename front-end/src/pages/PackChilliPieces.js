@@ -1,4 +1,3 @@
-// src/DriedChilli.js
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -84,7 +83,7 @@ const PackChilliPieces = () => {
                   {row.deliveryOrNot === "No"||"Yes" ? row.remarkIn : row.remarkOut}
                 </TableCell>
                 <TableCell>
-  {new Date(row.createdAt).toLocaleDateString('en-US')}
+                {new Date(row.createdAt).toLocaleDateString('en-US')}
 </TableCell>
               </TableRow>
             ))}

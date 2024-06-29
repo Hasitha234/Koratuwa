@@ -1,4 +1,3 @@
-// src/DriedChilli.js
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -42,7 +41,6 @@ const PepperPowder = () => {
         <Table>
           <TableHead>
             <TableRow>
-              
               <TableCell>Store Type</TableCell>
               <TableCell>Stock Spices Type</TableCell>
               <TableCell>Store Keeper</TableCell>
@@ -57,7 +55,6 @@ const PepperPowder = () => {
           <TableBody>
             {data.map((row) => (
               <TableRow key={row.id}>
-                
                 <TableCell>{row.storeType}</TableCell>
                 <TableCell>
                   {row.storeType === "IN"
@@ -85,7 +82,7 @@ const PepperPowder = () => {
                   {row.storeType === "IN" ? row.quantityIn : row.quantityOut}
                 </TableCell>
                 <TableCell>
-                  {row.storeType === "IN" ? row.createdAt : row.createdAt}
+                  {new Date(row.createdAt).toLocaleDateString('en-US')}
                 </TableCell>
               </TableRow>
             ))}

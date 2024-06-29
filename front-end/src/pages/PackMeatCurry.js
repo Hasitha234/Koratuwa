@@ -22,8 +22,8 @@ const PackChilliPieces = () => {
       .then((data) => {
         const filteredData = data.filter(
           (item) =>
-            item.storePackingTypeIn === "Meat Curry" ||
-            item.storePackingTypeOut === "Meat Curry"
+            item.storePackingTypeIn === "Meat Curry Powder" ||
+            item.storePackingTypeOut === "Meat Curry Powder"
         );
         setData(filteredData);
       })
@@ -37,7 +37,7 @@ const PackChilliPieces = () => {
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-      Meat Curry
+      Meat Curry Powder
       </Typography>
       <Button variant="contained" color="primary" onClick={() => navigate("/PackingStore")}>
         Back to Store

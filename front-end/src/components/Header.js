@@ -17,15 +17,15 @@ import AdbIcon from '@mui/icons-material/Adb';
 const pages = [
   { title: 'Main Store', path: '/MainStore' },
   { title: 'Packing Store', path: '/PackingStore' },
-  { title: 'Bill Info', path: '/bill' },
-  { title: 'Reports', path: '/reports' }
+  { title: 'Bill Info', path: '/BillInfo' },
+  { title: 'Reports', path: '/Reports' }
 ];
 
 const settings = [
   { title: 'Main Store', path: '/MainStore' },
   { title: 'Packing Store', path: '/PackingStore' },
-  { title: 'Bill Info', path: '/bill' },
-  { title: 'Reports', path: '/reports' },
+  { title: 'Bill Info', path: '/BillInfo' },
+  { title: 'Reports', path: '/Reports' },
   { title: 'Dashboard', path: '/Home' },
   { title: 'Logout', path: '/' }
 ];

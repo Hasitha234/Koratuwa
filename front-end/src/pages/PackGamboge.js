@@ -1,4 +1,3 @@
-// src/DriedChilli.js
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -12,7 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 
-const PackChilliPieces = () => {
+const PackGamboge = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -22,8 +21,8 @@ const PackChilliPieces = () => {
       .then((data) => {
         const filteredData = data.filter(
           (item) =>
-            item.storePackingTypeIn === "Gamboge" ||
-            item.storePackingTypeOut === "Gamboge"
+            item.storePackingTypeIn === "Gamboge Pack" ||
+            item.storePackingTypeOut === "Gamboge Pack"
         );
         setData(filteredData);
       })
@@ -37,7 +36,7 @@ const PackChilliPieces = () => {
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-      Gamboge
+        Gamboge
       </Typography>
       <Button variant="contained" color="primary" onClick={() => navigate("/PackingStore")}>
         Back to Store
@@ -84,7 +83,7 @@ const PackChilliPieces = () => {
                   {row.deliveryOrNot === "No"||"Yes" ? row.remarkIn : row.remarkOut}
                 </TableCell>
                 <TableCell>
-  {new Date(row.createdAt).toLocaleDateString('en-US')}
+                {new Date(row.createdAt).toLocaleDateString('en-US')}
 </TableCell>
               </TableRow>
             ))}
@@ -95,4 +94,4 @@ const PackChilliPieces = () => {
   );
 };
 
-export default PackChilliPieces;
+export default PackGamboge;

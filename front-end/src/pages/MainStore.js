@@ -1,4 +1,3 @@
-// src/MainStore.js
 import React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -6,13 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import backgroundImage from "../images/dan-burton-lrHpdJ9r7sQ-unsplash.jpg";
+import ResponsiveAppBar from "../components/Header";
+import backgroundImage from "../images/123.jpg";
 
 const cardsData = [
   { title: "Dried Chilli", path: "/dried-chilli" },
   { title: "Dried Turmeric", path: "/dried-turmeric" },
   { title: "Pepper Seeds", path: "/pepper-seeds" },
-  { title: "Pepper powder", path: "/pepper-powder" },
+  { title: "Pepper Powder", path: "/pepper-powder" }, // Corrected path
   { title: "Cinnamon", path: "/cinnamon" },
   { title: "Gamboge", path: "/gamboge" },
   { title: "Fennel Seeds", path: "/fennel-seeds" },
@@ -58,101 +58,111 @@ const MainStore = () => {
     navigate(path);
   };
 
+  const styles = {
+    container: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      position: "relative",
+      zIndex: 0,
+    },
+  };
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center center",
-        alignItems: "center",
-      }}
-    >
-      {/* Content wrapper */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: "1200px",
-          padding: "20px",
-          borderBottom: "1px solid #ccc",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {/* Header section */}
+    <>
+      <ResponsiveAppBar />
+      <div style={styles.container}>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "20px",
-            width: "100%",
+            flexDirection: "column",
+            minHeight: "100vh",
+            margin: 0,
+            padding: 0,
+            boxSizing: "border-box",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
           }}
         >
-          <Typography variant="h2" sx={{ flexGrow: 1 }} align="center">
-            <b>Main Store</b>
-          </Typography>
+          {/* Header section */}
+          <Box sx={{ padding: "20px", borderBottom: "1px solid #ccc" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <Typography variant="h2" sx={{ flexGrow: 1, color: '#634F0C' }} align="center">
+                <b>Main Store</b>
+              </Typography>
+            </Box>
+            <br /><br /><br />
+
+            {/* Cards section */}
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: "auto",
+                maxWidth: "1200px", // You can adjust the maxWidth as needed
+              }}
+            >
+              {cardsData.map((card, index) => (
+                <BasicCard
+                  key={index}
+                  title={card.title}
+                  onClick={() => handleCardClick(card.path)}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          {/* Footer section */}
           <Button
             variant="contained"
-            color="primary"
-            onClick={() => navigate("/home")}
+            sx={{
+              backgroundColor: "#634F0C", // Setting the button color
+              "&:hover": {
+                backgroundColor: "#4a3809", // Slightly darker color for the hover effect
+              },
+              position: "fixed",
+              bottom: "20px",
+              right: "20px",
+              zIndex: 1000, // Ensures it's above other elements if there are overlays
+            }}
+            onClick={() => navigate("/store-in")}
           >
-            Home
+            Main Store In
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#634F0C", // Setting the button color
+              "&:hover": {
+                backgroundColor: "#4a3809", // Slightly darker color for the hover effect
+              },
+              position: "fixed",
+              bottom: "20px",
+              left: "20px",
+              zIndex: 1000, // Ensures it's above other elements if there are overlays
+            }}
+            onClick={() => navigate("/store-out")}
+          >
+            Main Store Out
           </Button>
         </Box>
-
-        {/* Cards section */}
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-            justifyContent: "center",
-          }}
-        >
-          {cardsData.map((card, index) => (
-            <BasicCard
-              key={index}
-              title={card.title}
-              onClick={() => handleCardClick(card.path)}
-            />
-          ))}
-        </Box>
-      </Box>
-
-      {/* Footer section */}
-      <Box
-        sx={{
-          marginTop: "auto",
-          borderTop: "1px solid #ccc",
-          padding: "20px",
-          display: "flex",
-          justifyContent: "flex-end",
-          width: "100%",
-          maxWidth: "1200px",
-        }}
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ marginRight: "10px" }}
-          onClick={() => navigate("/store-in")}
-        >
-          Main Store In
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => navigate("/store-out")}
-        >
-          Main Store Out
-        </Button>
-      </Box>
-    </Box>
+      </div>
+    </>
   );
 };
 

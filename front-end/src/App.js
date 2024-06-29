@@ -11,7 +11,8 @@ import PackingOut from "./pages/PackingOut";
 import DriedChilli from "./pages/DriedChillie";
 import DriedTurmeric from "./pages/DriedTurmeric";
 import PepperSeeds from "./pages/PepperSeeds";
-import PepperPowder from "./pages/PepperPowder";
+import PepperPowder from "./pages/PepperPowder"; // Import PepperPowder component
+import PackPepperPowder from "./pages/PackPepperPowder"; // Import PackPepperPowder component
 import Cinnamon from "./pages/Cinnamon";
 import Gamboge from "./pages/Gamboge";
 import FennelSeeds from "./pages/FennelSeeds";
@@ -39,6 +40,11 @@ import TeaPowder from "./pages/PackTeaPowder";
 import ClovePacks from "./pages/PackClovesPacks";
 import CardamomPacks from "./pages/PackCardamomPacks";
 import SuwadaHatha from "./pages/PackSuwadaHatha";
+import FenugreekPack from "./pages/PackFenugreek";
+import BillInfo from "./pages/BillInfo";
+import Reports from "./pages/Reports";
+import CinnamonPack from "./pages/PackCinnamon";
+import GambogePack from "./pages/PackGamboge";
 
 function App() {
   return (
@@ -52,10 +58,13 @@ function App() {
         <Route path="/packing-in" element={<PackingIn />} />
         <Route path="/store-out" element={<StoreOut />} />
         <Route path="/packing-out" element={<PackingOut />} />
+        <Route path="/BillInfo" element={<BillInfo />} />
+        <Route path="/Reports" element={<Reports />} />
         <Route path="/dried-chilli" element={<DriedChilli />} />
         <Route path="/dried-turmeric" element={<DriedTurmeric />} />
         <Route path="/pepper-seeds" element={<PepperSeeds />} />
         <Route path="/pepper-powder" element={<PepperPowder />} />
+        <Route path="/pepper-powder-pack" element={<PackPepperPowder />} /> {/* Updated route */}
         <Route path="/cinnamon" element={<Cinnamon />} />
         <Route path="/gamboge" element={<Gamboge />} />
         <Route path="/fennel-seeds" element={<FennelSeeds />} />
@@ -83,6 +92,9 @@ function App() {
         <Route path="/clove-packs" element={<ClovePacks />} />
         <Route path="/cardamom-packs" element={<CardamomPacks />} />
         <Route path="/suwada-hatha" element={<SuwadaHatha />} />
+        <Route path="/fenugreek-pack" element={<FenugreekPack />} />
+        <Route path="/cinnamon-pack" element={<CinnamonPack />} />
+        <Route path="/gamboge-pack" element={<GambogePack />} />
       </Routes>
     </Router>
   );

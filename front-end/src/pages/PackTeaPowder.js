@@ -12,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 
-const PackChilliPieces = () => {
+const PackTeaPowder = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -95,4 +95,4 @@ const PackChilliPieces = () => {
   );
 };
 
-export default PackChilliPieces;
+export default PackTeaPowder;

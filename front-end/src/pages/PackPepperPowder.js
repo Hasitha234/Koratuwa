@@ -12,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 
-const PackChilliPieces = () => {
+const PackPepperPowder = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ const PackChilliPieces = () => {
       .then((data) => {
         const filteredData = data.filter(
           (item) =>
-            item.storePackingTypeIn === "Pepper Powder" ||
-            item.storePackingTypeOut === "Pepper Powder"
+            item.storePackingTypeIn === "Pepper Powder Pack" ||
+            item.storePackingTypeOut === "Pepper Powder Pack"
         );
         setData(filteredData);
       })
@@ -95,4 +95,4 @@ const PackChilliPieces = () => {
   );
 };
 
-export default PackChilliPieces;
+export default PackPepperPowder;
