@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -12,7 +12,7 @@ const cardsData = [
   { title: "Dried Chilli", path: "/dried-chilli" },
   { title: "Dried Turmeric", path: "/dried-turmeric" },
   { title: "Pepper Seeds", path: "/pepper-seeds" },
-  { title: "Pepper Powder", path: "/pepper-powder" }, // Corrected path
+  { title: "Pepper Powder", path: "/pepper-powder" },
   { title: "Cinnamon", path: "/cinnamon" },
   { title: "Gamboge", path: "/gamboge" },
   { title: "Fennel Seeds", path: "/fennel-seeds" },
@@ -30,7 +30,7 @@ const cardsData = [
   { title: "Rice", path: "/rice" },
 ];
 
-const BasicCard = ({ title, onClick }) => (
+const BasicCard = ({ title, quantity, onClick }) => (
   <Button
     component={Card}
     sx={{
@@ -47,12 +47,40 @@ const BasicCard = ({ title, onClick }) => (
       <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
         {title}
       </Typography>
+      <Typography sx={{ fontSize: 18 }} color="text.primary">
+        Quantity: {quantity}
+      </Typography>
     </CardContent>
   </Button>
 );
 
 const MainStore = () => {
   const navigate = useNavigate();
+  const [quantities, setQuantities] = useState({});
+
+  useEffect(() => {
+    fetch("https://diplomatic-beauty-production.up.railway.app/api/main-store/all")
+      .then(response => response.json())
+      .then(data => {
+        const quantityMap = data.reduce((acc, item) => {
+          const key = item.stockSpicesTypeIn || item.stockSpicesTypeOut;
+          if (!acc[key]) {
+            acc[key] = { quantityIn: 0, quantityOut: 0 };
+          }
+          acc[key].quantityIn += item.quantityIn || 0;
+          acc[key].quantityOut += item.quantityOut || 0;
+          return acc;
+        }, {});
+
+        const calculatedQuantities = Object.keys(quantityMap).reduce((acc, key) => {
+          acc[key] = quantityMap[key].quantityIn - quantityMap[key].quantityOut;
+          return acc;
+        }, {});
+
+        setQuantities(calculatedQuantities);
+      })
+      .catch(error => console.error("Error fetching data:", error));
+  }, []);
 
   const handleCardClick = (path) => {
     navigate(path);
@@ -121,6 +149,7 @@ const MainStore = () => {
                 <BasicCard
                   key={index}
                   title={card.title}
+                  quantity={quantities[card.title] || 0}
                   onClick={() => handleCardClick(card.path)}
                 />
               ))}
@@ -131,14 +160,14 @@ const MainStore = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: "#634F0C", // Setting the button color
+              backgroundColor: "#634F0C",
               "&:hover": {
-                backgroundColor: "#4a3809", // Slightly darker color for the hover effect
+                backgroundColor: "#4a3809",
               },
               position: "fixed",
               bottom: "20px",
               right: "20px",
-              zIndex: 1000, // Ensures it's above other elements if there are overlays
+              zIndex: 1000,
             }}
             onClick={() => navigate("/store-in")}
           >
@@ -147,14 +176,14 @@ const MainStore = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: "#634F0C", // Setting the button color
+              backgroundColor: "#634F0C",
               "&:hover": {
-                backgroundColor: "#4a3809", // Slightly darker color for the hover effect
+                backgroundColor: "#4a3809",
               },
               position: "fixed",
               bottom: "20px",
               left: "20px",
-              zIndex: 1000, // Ensures it's above other elements if there are overlays
+              zIndex: 1000,
             }}
             onClick={() => navigate("/store-out")}
           >
