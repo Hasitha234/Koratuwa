@@ -36,7 +36,7 @@ const BasicCard = ({ title, quantity, onClick }) => (
     sx={{
       minWidth: 275,
       marginBottom: 2,
-      backgroundColor: "white",
+      backgroundColor: quantity < 5 ? '#A70000' : 'white',
       alignItems: "center",
       display: "flex",
       justifyContent: "center",
@@ -47,8 +47,8 @@ const BasicCard = ({ title, quantity, onClick }) => (
       <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
         {title}
       </Typography>
-      <Typography sx={{ fontSize: 18 }} color="text.primary">
-        Quantity: {quantity}
+      <Typography sx={{ fontSize: 20, textAlign: 'center' }} color="text.primary">
+        {quantity}
       </Typography>
     </CardContent>
   </Button>

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import back from '../images/dan-burton-lrHpdJ9r7sQ-unsplash.jpg'; // Ensure the correct path to the image
+import img from '../images/Asset4.png';
 
 function Login() {
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ function Login() {
   return (
     <div style={styles.container}>
       <div style={styles.form}>
+      <img alt="User Avatar" src={img} style={{ width: '20%', height: '20%', objectFit: 'cover' }} />
         <h1>WELCOME TO   KORATUWA  CEYLON PRODUCTS (PVT) LTD</h1>
         <input 
           type="text" 

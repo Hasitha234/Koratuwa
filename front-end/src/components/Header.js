@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import img from '../images/Asset2.png';
 
 const pages = [
   { title: 'Main Store', path: '/MainStore' },
@@ -150,8 +151,13 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User Avatar" src={img} />
               </IconButton>
+              {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+      
+      <img alt="User Avatar" src={img} style={{ width: '10%', height: '10%', objectFit: 'cover' }} />
+    </IconButton> */}
+
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
