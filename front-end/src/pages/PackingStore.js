@@ -175,13 +175,7 @@ const PackingStore = () => {
               <Typography variant="h2" sx={{ flexGrow: 1, color: '#634F0C' }} align="center">
                 <b>Packing Store</b>
               </Typography>
-              <TextField
-                label="Search"
-                variant="outlined"
-                size="small"
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
+              
             </Box>
             <br/><br/><br/>
 
@@ -232,6 +226,15 @@ const PackingStore = () => {
       <div>
          {/* Table section */}
          <Box>
+          <br/>
+         <TextField
+         sx={{left: "25px"}}
+                label="Search"
+                variant="outlined"
+                size="small"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              /> <br/>
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>
