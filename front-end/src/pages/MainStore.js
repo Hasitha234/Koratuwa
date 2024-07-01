@@ -30,29 +30,42 @@ const cardsData = [
   { title: "Rice", path: "/rice" },
 ];
 
-const BasicCard = ({ title, quantity, onClick }) => (
-  <Button
-    component={Card}
-    sx={{
-      minWidth: 275,
-      marginBottom: 2,
-      backgroundColor: quantity < 5 ? '#A70000' : 'white',
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "center",
-    }}
-    onClick={onClick}
-  >
-    <CardContent>
-      <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
-        {title}
-      </Typography>
-      <Typography sx={{ fontSize: 20, textAlign: 'center' }} color="text.primary">
-        {quantity}
-      </Typography>
-    </CardContent>
-  </Button>
-);
+// Define custom thresholds
+const thresholds = {
+  "Dried Chilli": 100,
+  "Dried Turmeric": 100,
+  "Pepper Seeds": 100,
+  "Pepper Powder": 100,
+  default: 3,
+};
+
+const BasicCard = ({ title, quantity, onClick }) => {
+  const threshold = thresholds[title] || thresholds.default;
+
+  return (
+    <Button
+      component={Card}
+      sx={{
+        minWidth: 275,
+        marginBottom: 2,
+        backgroundColor: quantity < threshold ? '#A70000' : 'white',
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center",
+      }}
+      onClick={onClick}
+    >
+      <CardContent>
+        <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
+          {title}
+        </Typography>
+        <Typography sx={{ fontSize: 20, textAlign: 'center' }} color="text.primary">
+          {quantity}
+        </Typography>
+      </CardContent>
+    </Button>
+  );
+};
 
 const MainStore = () => {
   const navigate = useNavigate();
