@@ -4,6 +4,8 @@ import Typography from '@mui/material/Typography';
 import ResponsiveAppBar from '../components/Header';
 import backgroundImage from '../images/123.jpg';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 class DownloadCSV extends React.Component {
     downloadCSV = (apiUrl, fileName) => {
@@ -39,33 +41,37 @@ class DownloadCSV extends React.Component {
 
     render() {
         return (
-            <div style={{ textAlign: 'center' }}>
-                <h2 style={{ marginBottom: '20px' }}>Download CSV</h2>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => this.downloadCSV('https://diplomatic-beauty-production.up.railway.app/api/main-store/all', 'main_store_data.csv')}
-                    sx={{ marginRight: '10px', marginBottom: '10px' }}
-                >
-                    Download Main Store Data
-                </Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => this.downloadCSV('https://diplomatic-beauty-production.up.railway.app/api/packing-store/all', 'packing_store_data.csv')}
-                    sx={{ marginBottom: '10px' }}
-                >
-                    Download Packing Store Data
-                </Button>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => this.downloadCSV('https://diplomatic-beauty-production.up.railway.app/api/bills/all', 'bills_data.csv')}
-                    sx={{ marginLeft: '10px', marginBottom: '10px', backgroundColor: '#28a745' }}
-                >
-                    Download Bills Data
-                </Button>
-            </div>
+            <Card sx={{ minWidth: 305,height: '150px', margin: '20px', padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
+                <CardContent>
+                    <Typography variant="h5" component="div" gutterBottom>
+                        Download CSV
+                    </Typography>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => this.downloadCSV('https://diplomatic-beauty-production.up.railway.app/api/main-store/all', 'main_store_data.csv')}
+                        sx={{ marginLeft: '10px', marginBottom: '10px', backgroundColor: '#634F0C' }}
+                    >
+                        Download Main Store Data
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => this.downloadCSV('https://diplomatic-beauty-production.up.railway.app/api/packing-store/all', 'packing_store_data.csv')}
+                        sx={{ marginLeft: '10px', marginBottom: '10px', backgroundColor: '#634F0C' }}
+                    >
+                        Download Packing Store Data
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => this.downloadCSV('https://diplomatic-beauty-production.up.railway.app/api/bills/all', 'bills_data.csv')}
+                        sx={{ marginLeft: '10px', marginBottom: '10px', backgroundColor: '#634F0C' }}
+                    >
+                        Download Bills Data
+                    </Button>
+                </CardContent>
+            </Card>
         );
     }
 }

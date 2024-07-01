@@ -69,16 +69,16 @@ function ResponsiveAppBar() {
             component="a"
             href="/home"
             sx={{
-              mr: 6,
+              mr: 7,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.4rem',
+              letterSpacing: '.0rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            KORATUWA CEYLON
+            KORATUWA  CEYLON PRODUCTS (PVT) LTD
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

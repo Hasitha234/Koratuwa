@@ -87,6 +87,7 @@ function Home() {
         </button>
         <button
           style={styles.button}
+          onClick={() => (window.location.href = "/BillInfo")}
           onMouseEnter={(e) =>
             (e.currentTarget.style.backgroundColor =
               styles.buttonHover.backgroundColor)
