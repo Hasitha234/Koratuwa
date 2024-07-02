@@ -143,15 +143,16 @@ const PackingIn = () => {
                 sx={{ backgroundColor: formValues.delivery === "Direct" ? '#A38214' : 'default', color: formValues.delivery === "Direct" ? 'white' : 'default' }}
               />
               <Chip 
-                label="Return" 
-                onClick={() => handleChipClick("Return")} 
-                sx={{ backgroundColor: formValues.delivery === "Return" ? '#A38214' : 'default', color: formValues.delivery === "Return" ? 'white' : 'default' }}
-              />
-              <Chip 
                 label="Delivery" 
                 onClick={() => handleChipClick("Delivery")} 
                 sx={{ backgroundColor: formValues.delivery === "Delivery" ? '#A38214' : 'default', color: formValues.delivery === "Delivery" ? 'white' : 'default' }}
               />
+              <Chip 
+                label="Return" 
+                onClick={() => handleChipClick("Return")} 
+                sx={{ backgroundColor: formValues.delivery === "Return" ? '#A38214' : 'default', color: formValues.delivery === "Return" ? 'white' : 'default' }}
+              />
+              
             </Box>
           </FormControl>
           

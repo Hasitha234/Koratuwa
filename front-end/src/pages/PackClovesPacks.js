@@ -1,18 +1,12 @@
-// src/DriedChilli.js
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
+import * as React from 'react';
+import { useEffect, useState } from "react";
+import { DataGrid } from '@mui/x-data-grid';
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "../components/Header";
 
-const PackChilliPieces = () => {
+const PackCloves = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -33,66 +27,39 @@ const PackChilliPieces = () => {
   const renderValue = (value) => {
     return value === 0 ? "-" : value;
   };
+  
+  
+
+  const columns = [
+    { field: 'deliveryOrNot', headerName: 'Store Type', width: 150 },
+    { field: 'storePackingTypeIn', headerName: 'Stock Spices Type', width: 180 },
+    { field: 'outSpicesQuantity', headerName: 'Out Spices Quantity', width: 200, valueFormatter: (params) => renderValue(params.value) },
+    { field: 'grindQuantity', headerName: 'Grind Quantity', width: 180, valueFormatter: (params) => renderValue(params.value) },
+    { field: 'packetTypeIn', headerName: 'Packet Type', width: 150 },
+    { field: 'packetQuantityIn', headerName: 'Packet Quantity', width: 180 },
+    { field: 'nameIn', headerName: 'Name', width: 150 },
+    { field: 'remarkIn', headerName: 'Remark', width: 150 },
+    { field: 'createdAt', headerName: 'Date', width: 150  },
+  ];
 
   return (
-    <Box sx={{ padding: "20px" }}>
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-      Cloves Pack
-      </Typography>
-      <Button variant="contained" color="primary" onClick={() => navigate("/PackingStore")}>
-        Back to Store
-      </Button>
-      <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Store Type</TableCell>
-              <TableCell>Stock Spices Type</TableCell>
-              <TableCell>Out Spices Quantity</TableCell>
-              <TableCell>Grind Quantity</TableCell>
-              <TableCell>Packet Type</TableCell>
-              <TableCell>Packet Quantity</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Remark</TableCell>
-              <TableCell>Date</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.deliveryOrNot}</TableCell>
-                <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? row.storePackingTypeIn : row.storePackingTypeOut}
-                </TableCell>
-                <TableCell>
-                  {row.outSpicesQuantity ? renderValue(row.grindQuantity) : "-"}
-                </TableCell>
-                <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? renderValue(row.grindQuantity) : "-"}
-                </TableCell>
-                <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? row.packetTypeIn : row.packetTypeOut}
-                </TableCell>
-                
-                <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? row.packetQuantityIn : row.packetQuantityOut}
-                </TableCell>
-                <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? row.nameIn : row.nameOut}
-                </TableCell>
-                <TableCell>
-                  {row.deliveryOrNot === "No"||"Yes" ? row.remarkIn : row.remarkOut}
-                </TableCell>
-                <TableCell>
-  {new Date(row.createdAt).toLocaleDateString('en-US')}
-</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    <>
+      <ResponsiveAppBar /><br/><br/>
+      <Box sx={{ padding: "20px" }}>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Clove
+        </Typography><br/><br/>
+        <div style={{ height: 400, width: '100%', marginTop: "20px" }}>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSize={5}
+            checkboxSelection
+          />
+        </div>
+      </Box>
+    </>
   );
 };
 
-export default PackChilliPieces;
+export default PackCloves;

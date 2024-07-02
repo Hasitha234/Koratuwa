@@ -16,14 +16,37 @@ const Cardamom = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://diplomatic-beauty-production.up.railway.app/api/main-store/all")
+    // Fetching data from the API
+    fetch(
+      "https://diplomatic-beauty-production.up.railway.app/api/main-store/all"
+    )
       .then((response) => response.json())
       .then((data) => {
-        const filteredData = data.filter(
-          (item) =>
-            item.stockSpicesTypeIn === "Cardamom" ||
-            item.stockSpicesTypeOut === "Cardamom"
-        );
+        const filteredData = data
+          .filter(
+            (item) =>
+              item.stockSpicesTypeIn === "Cardamom" ||
+              item.stockSpicesTypeOut === "Cardamom"
+          )
+          .map((item, index) => ({
+            id: index + 1, // Add an id field for DataGrid
+            storeType: item.storeType,
+            stockSpicesType:
+              item.storeType === "IN"
+                ? item.stockSpicesTypeIn
+                : item.stockSpicesTypeOut,
+            storeKeeper:
+              item.storeType === "IN"
+                ? item.storeKeeperIn
+                : item.storeKeeperOut,
+            totalPrice: item.storeType === "IN" ? item.totalPriceIn : 0,
+            rate: item.storeType === "IN" ? item.rateIn : 0,
+            company: item.storeType === "IN" ? item.companyIn : "",
+            remark: item.storeType === "IN" ? item.remarkIn : item.remarkOut,
+            quantity:
+              item.storeType === "IN" ? item.quantityIn : item.quantityOut,
+            date: new Date(item.createdAt).toLocaleDateString("en-US"),
+          }));
         setData(filteredData);
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -34,13 +57,18 @@ const Cardamom = () => {
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Cardamom
       </Typography>
-      <Button variant="contained" color="primary" onClick={() => navigate("/MainStore")}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/MainStore")}
+      >
         Back to Store
       </Button>
       <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Store Type</TableCell>
               <TableCell>Stock Spices Type</TableCell>
               <TableCell>Store Keeper</TableCell>
@@ -54,36 +82,23 @@ const Cardamom = () => {
           </TableHead>
           <TableBody>
             {data.map((row) => (
-              <TableRow key={row.id}>
+              <TableRow
+                key={row.id}
+                sx={{
+                  backgroundColor:
+                    row.storeType === "IN" ? "#FFFACD" : "#D3D3D3",
+                }}
+              >
+                <TableCell>{row.id}</TableCell>
                 <TableCell>{row.storeType}</TableCell>
-                <TableCell>
-                  {row.storeType === "IN"
-                    ? row.stockSpicesTypeIn
-                    : row.stockSpicesTypeOut}
-                </TableCell>
-                <TableCell>
-                  {row.storeType === "IN"
-                    ? row.storeKeeperIn
-                    : row.storeKeeperOut}
-                </TableCell>
-                <TableCell>
-                  {row.storeType === "IN" ? row.totalPriceIn : 0}
-                </TableCell>
-                <TableCell>
-                  {row.storeType === "IN" ? row.rateIn : 0}
-                </TableCell>
-                <TableCell>
-                  {row.storeType === "IN" ? row.companyIn : ""}
-                </TableCell>
-                <TableCell>
-                  {row.storeType === "IN" ? row.remarkIn : row.remarkOut}
-                </TableCell>
-                <TableCell>
-                  {row.storeType === "IN" ? row.quantityIn : row.quantityOut}
-                </TableCell>
-                <TableCell>
-                {new Date(row.createdAt).toLocaleDateString('en-US')}
-                </TableCell>
+                <TableCell>{row.stockSpicesType}</TableCell>
+                <TableCell>{row.storeKeeper}</TableCell>
+                <TableCell>{row.totalPrice}</TableCell>
+                <TableCell>{row.rate}</TableCell>
+                <TableCell>{row.company}</TableCell>
+                <TableCell>{row.remark}</TableCell>
+                <TableCell>{row.quantity}</TableCell>
+                <TableCell>{row.date}</TableCell>
               </TableRow>
             ))}
           </TableBody>
