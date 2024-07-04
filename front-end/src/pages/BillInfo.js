@@ -5,11 +5,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ResponsiveAppBar from '../components/Header';
-
 import Autocomplete from '@mui/material/Autocomplete';
 import Chip from '@mui/material/Chip';
 
 const predefinedTypes = ['50g', '100g', '200g', '500g', '1kg', '2kg', '5kg', '10kg'];
+const predefinedReturnOptions = ['Yes', 'No'];
 
 const BillInfo = () => {
   const [formData, setFormData] = useState({
@@ -24,9 +24,14 @@ const BillInfo = () => {
     netTotal: 0,
     receivedBy: '',
     salesRefBy: '',
+    returnOrNot: '',
     products: [
       { product: '', type: '', quantity: 0, rate: 0, price: 0, showDetails: true }
-    ]
+    ],
+    returnDetails: [
+      { spicesType: '', packetType: '', quantity: 0, rate: 0, price: 0, showDetails: true }
+    ],
+    showReturnDetails: false // Add a flag to show/hide return details
   });
 
   // Calculate total whenever products change
@@ -42,6 +47,19 @@ const BillInfo = () => {
     calculateTotal();
   }, [formData.products]);
 
+  // Calculate returns whenever return details change
+  useEffect(() => {
+    const calculateReturns = () => {
+      const totalReturns = formData.returnDetails.reduce((acc, detail) => acc + parseFloat(detail.price), 0);
+      setFormData(prevState => ({
+        ...prevState,
+        returns: totalReturns
+      }));
+    };
+
+    calculateReturns();
+  }, [formData.returnDetails]);
+
   // Calculate netTotal whenever returns or total changes
   useEffect(() => {
     const calculateNetTotal = () => {
@@ -55,7 +73,17 @@ const BillInfo = () => {
     calculateNetTotal();
   }, [formData.total, formData.returns]);
 
-  const handleChange = (index, event) => {
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    let showReturnDetails = false;
+    if (name === 'returnOrNot' && value === 'Yes') {
+      showReturnDetails = true;
+    }
+
+    setFormData({ ...formData, [name]: value, showReturnDetails });
+  };
+
+  const handleProductChange = (index, event) => {
     const { name, value } = event.target;
     const updatedProducts = [...formData.products];
     updatedProducts[index] = { ...updatedProducts[index], [name]: value };
@@ -69,11 +97,32 @@ const BillInfo = () => {
 
     setFormData({ ...formData, products: updatedProducts });
   };
-  
+
+  const handleReturnChange = (index, event) => {
+    const { name, value } = event.target;
+    const updatedReturnDetails = [...formData.returnDetails];
+    updatedReturnDetails[index] = { ...updatedReturnDetails[index], [name]: value };
+
+    // Calculate price when quantity or rate changes
+    if (name === 'quantity' || name === 'rate') {
+      const quantity = parseFloat(updatedReturnDetails[index].quantity);
+      const rate = parseFloat(updatedReturnDetails[index].rate);
+      updatedReturnDetails[index].price = (quantity * rate).toFixed(2); // Ensure price is rounded to 2 decimal places
+    }
+
+    setFormData({ ...formData, returnDetails: updatedReturnDetails });
+  };
+
   const handleTypeChange = (index, event, newValue) => {
     const updatedProducts = [...formData.products];
     updatedProducts[index] = { ...updatedProducts[index], type: newValue };
     setFormData({ ...formData, products: updatedProducts });
+  };
+
+  const handleReturnTypeChange = (index, event, newValue) => {
+    const updatedReturnDetails = [...formData.returnDetails];
+    updatedReturnDetails[index] = { ...updatedReturnDetails[index], packetType: newValue };
+    setFormData({ ...formData, returnDetails: updatedReturnDetails });
   };
 
   const handleAddProduct = () => {
@@ -86,10 +135,26 @@ const BillInfo = () => {
     });
   };
 
+  const handleAddReturnDetail = () => {
+    setFormData({
+      ...formData,
+      returnDetails: [
+        ...formData.returnDetails,
+        { spicesType: '', packetType: '', quantity: 0, rate: 0, price: 0, showDetails: true }
+      ]
+    });
+  };
+
   const toggleProductDetails = (index) => {
     const updatedProducts = [...formData.products];
     updatedProducts[index].showDetails = !updatedProducts[index].showDetails;
     setFormData({ ...formData, products: updatedProducts });
+  };
+
+  const toggleReturnDetails = (index) => {
+    const updatedReturnDetails = [...formData.returnDetails];
+    updatedReturnDetails[index].showDetails = !updatedReturnDetails[index].showDetails;
+    setFormData({ ...formData, returnDetails: updatedReturnDetails });
   };
 
   const handleSubmit = async (event) => {
@@ -116,9 +181,14 @@ const BillInfo = () => {
           netTotal: 0,
           receivedBy: '',
           salesRefBy: '',
+          returnOrNot: '',
           products: [
             { product: '', type: '', quantity: 0, rate: 0, price: 0, showDetails: true }
-          ]
+          ],
+          returnDetails: [
+            { spicesType: '', packetType: '', quantity: 0, rate: 0, price: 0, showDetails: true }
+          ],
+          showReturnDetails: false // Reset showReturnDetails flag
         });
       } else {
         alert('Failed to save bill');
@@ -131,248 +201,407 @@ const BillInfo = () => {
 
   return (
     <>
-      <ResponsiveAppBar /> <br/><br/>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5'
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '8px',
-          padding: '32px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          width: '100%',
-          maxWidth: '600px'
-        }}>
-          <Typography style={{
-            textAlign: 'center',
-            color: '#634F0C'
-          }} variant="h4" component="h1" gutterBottom>
-            Billing Information
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Bill No"
-              variant="outlined"
-              value={formData.billNo}
-              onChange={(e) => setFormData({ ...formData, billNo: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Date"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              variant="outlined"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Sale Reference"
-              variant="outlined"
-              value={formData.saleRef}
-              onChange={(e) => setFormData({ ...formData, saleRef: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Mobile"
-              variant="outlined"
-              value={formData.mobile}
-              onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Customer Name"
-              variant="outlined"
-              value={formData.customerName}
-              onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Address"
-              variant="outlined"
-              value={formData.address}
-              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-            />
-            
-            {formData.products.map((product, index) => (
-              <div key={index} style={{
-                marginTop: '16px',
-                marginBottom: '16px',
-                padding: '16px',
-                border: '1px solid #e0e0e0',
-                borderRadius: '8px'
-              }}>
-                <Typography variant="h6" component="h2" onClick={() => toggleProductDetails(index)} style={{ cursor: 'pointer' }}>
-                  Product - {index + 1} {product.showDetails ? '▼' : '►'}
-                </Typography>
-                {product.showDetails && (
-                  <>
-                    <TextField
-                      fullWidth
-                      margin="normal"
-                      label="Product"
+      <ResponsiveAppBar />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#f5f5f5'
+        }}
+      >
+        <Container maxWidth="sm">
+          <Box
+            sx={{
+              backgroundColor: 'white',
+              borderRadius: '8px',
+              padding: '32px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+            }}
+          >
+            <Typography
+              sx={{ textAlign: 'center', color: '#634F0C' }}
+              variant="h4"
+              component="h1"
+              gutterBottom
+            >
+              Billing Information
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Bill No"
+                variant="outlined"
+                name="billNo"
+                value={formData.billNo}
+                onChange={handleChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Date"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                variant="outlined"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Sale Reference"
+                variant="outlined"
+                name="saleRef"
+                value={formData.saleRef}
+                onChange={handleChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Mobile"
+                variant="outlined"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Customer Name"
+                variant="outlined"
+                name="customerName"
+                value={formData.customerName}
+                onChange={handleChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Address"
+                variant="outlined"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+              <Typography variant="h5" component="h3" sx={{ marginTop: '16px' }}>
+                Products
+              </Typography>
+              {formData.products.map((product, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    marginTop: '16px',
+                    marginBottom: '16px',
+                    padding: '16px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '8px'
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    component="h2"
+                    onClick={() => toggleProductDetails(index)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    Product - {index + 1} {product.showDetails ? '▼' : '►'}
+                  </Typography>
+                  {product.showDetails && (
+                    <>
+                      <TextField
+                        fullWidth
+                        margin="normal"
+                        label="Product"
+                        variant="outlined"
+                        name="product"
+                        value={product.product}
+                        onChange={(e) => handleProductChange(index, e)}
+                      />
+                      <Autocomplete
+                        freeSolo
+                        options={predefinedTypes}
+                        value={product.type}
+                        onChange={(event, newValue) =>
+                          handleTypeChange(index, event, newValue)
+                        }
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            <Chip
+                              variant="outlined"
+                              label={option}
+                              {...getTagProps({ index })}
+                            />
+                          ))
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Type"
+                            variant="outlined"
+                            margin="normal"
+                          />
+                        )}
+                      />
+                      <TextField
+                        fullWidth
+                        margin="normal"
+                        label="Quantity"
+                        variant="outlined"
+                        type="number"
+                        name="quantity"
+                        value={product.quantity}
+                        onChange={(e) => handleProductChange(index, e)}
+                      />
+                      <TextField
+                        fullWidth
+                        margin="normal"
+                        label="Rate"
+                        variant="outlined"
+                        type="number"
+                        name="rate"
+                        value={product.rate}
+                        onChange={(e) => handleProductChange(index, e)}
+                      />
+                      <TextField
+                        fullWidth
+                        margin="normal"
+                        label="Price"
+                        variant="outlined"
+                        type="number"
+                        name="price"
+                        value={product.price}
+                        onChange={(e) => handleProductChange(index, e)}
+                      />
+                    </>
+                  )}
+                </Box>
+              ))}
+              <Button
+                sx={{
+                  backgroundColor: '#634F0C',
+                  '&:hover': {
+                    backgroundColor: '#4a3809'
+                  }
+                }}
+                variant="contained"
+                color="primary"
+                onClick={handleAddProduct}
+                style={{ marginTop: '16px' }}
+              >
+                Add Product
+              </Button>
+              <Typography
+                variant="h5"
+                component="h3"
+                sx={{ marginTop: '16px' }}
+              >
+                Returns
+              </Typography>
+              <Autocomplete
+                freeSolo
+                options={predefinedReturnOptions}
+                value={formData.returnOrNot}
+                onChange={(event, newValue) =>
+                  handleChange({ target: { name: 'returnOrNot', value: newValue } })
+                }
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
                       variant="outlined"
-                      name="product"
-                      value={product.product}
-                      onChange={(e) => handleChange(index, e)}
+                      label={option}
+                      {...getTagProps({ index })}
                     />
-                    <Autocomplete
-                      freeSolo
-                      options={predefinedTypes}
-                      value={product.type}
-                      onChange={(event, newValue) => handleTypeChange(index, event, newValue)}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-                        ))
-                      }
-                      renderInput={(params) => (
-                        <TextField {...params} label="Type" variant="outlined" margin="normal" />
-                      )}
-                    />
-                    <TextField
-                      fullWidth
-                      margin="normal"
-                      label="Quantity"
-                      variant="outlined"
-                      type="number"
-                      name="quantity"
-                      value={product.quantity}
-                      onChange={(e) => handleChange(index, e)}
-                    />
-                    <TextField
-                      fullWidth
-                      margin="normal"
-                      label="Rate"
-                      variant="outlined"
-                      type="number"
-                      name="rate"
-                      value={product.rate}
-                      onChange={(e) => handleChange(index, e)}
-                    />
-                    <TextField
-                      fullWidth
-                      margin="normal"
-                      label="Price"
-                      variant="outlined"
-                      type="number"
-                      name="price"
-                      value={product.price}
-                      onChange={(e) => handleChange(index, e)}
-                    />
-                  </>
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Return or Not"
+                    variant="outlined"
+                    margin="normal"
+                  />
                 )}
-              </div>
-            ))}
-            <Button
-              sx={{
-                backgroundColor: "#634F0C",
-                "&:hover": {
-                  backgroundColor: "#4a3809",
-                }
-              }}
-              variant="contained"
-              color="primary"
-              onClick={handleAddProduct}
-              style={{ marginTop: '16px' }}
-            >
-              Add Product
-            </Button><br/><br/>
-
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Total"
-              variant="outlined"
-              type="number"
-              value={formData.total}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Returns"
-              variant="outlined"
-              type="number"
-              value={formData.returns}
-              onChange={(e) => setFormData({ ...formData, returns: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Net Total"
-              variant="outlined"
-              type="number"
-              value={formData.netTotal}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Received By"
-              variant="outlined"
-              value={formData.receivedBy}
-              onChange={(e) => setFormData({ ...formData, receivedBy: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Sales Reference By"
-              variant="outlined"
-              value={formData.salesRefBy}
-              onChange={(e) => setFormData({ ...formData, salesRefBy: e.target.value })}
-            />
-            <h3><b>Returns</b></h3>
-            
-            
-            {/* <Button
-              sx={{
-                backgroundColor: "#634F0C",
-                "&:hover": {
-                  backgroundColor: "#4a3809",
-                }
-              }}
-              variant="contained"
-              color="primary"
-              onClick={handleAddProduct}
-              style={{ marginTop: '16px' }}
-            >
-              Add Product
-            </Button> */}
-            <Button
-              sx={{
-                backgroundColor: "#634F0C",
-                "&:hover": {
-                  backgroundColor: "#4a3809",
-                }
-              }}
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{ marginTop: '16px', marginLeft: '16px' }}
-            >
-              Submit
-            </Button>
-          </form>
-        </div>
-        
-      </div>
-      <br/><br/>
+              />
+              {formData.showReturnDetails && (
+                <>
+                  {formData.returnDetails.map((detail, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        marginTop: '16px',
+                        marginBottom: '16px',
+                        padding: '16px',
+                        border: '1px solid #e0e0e0',
+                        borderRadius: '8px'
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        component="h2"
+                        onClick={() => toggleReturnDetails(index)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        Return Detail - {index + 1}{' '}
+                        {detail.showDetails ? '▼' : '►'}
+                      </Typography>
+                      {detail.showDetails && (
+                        <>
+                          <TextField
+                            fullWidth
+                            margin="normal"
+                            label="Product"
+                            variant="outlined"
+                            name="spicesType"
+                            value={detail.spicesType}
+                            onChange={(e) => handleReturnChange(index, e)}
+                          />
+                          <Autocomplete
+                            freeSolo
+                            options={predefinedTypes}
+                            value={detail.packetType}
+                            onChange={(event, newValue) =>
+                              handleReturnTypeChange(index, event, newValue)
+                            }
+                            renderTags={(value, getTagProps) =>
+                              value.map((option, index) => (
+                                <Chip
+                                  variant="outlined"
+                                  label={option}
+                                  {...getTagProps({ index })}
+                                />
+                              ))
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Packet Type"
+                                variant="outlined"
+                                margin="normal"
+                              />
+                            )}
+                          />
+                          <TextField
+                            fullWidth
+                            margin="normal"
+                            label="Quantity"
+                            variant="outlined"
+                            type="number"
+                            name="quantity"
+                            value={detail.quantity}
+                            onChange={(e) => handleReturnChange(index, e)}
+                          />
+                          <TextField
+                            fullWidth
+                            margin="normal"
+                            label="Rate"
+                            variant="outlined"
+                            type="number"
+                            name="rate"
+                            value={detail.rate}
+                            onChange={(e) => handleReturnChange(index, e)}
+                          />
+                          <TextField
+                            fullWidth
+                            margin="normal"
+                            label="Price"
+                            variant="outlined"
+                            type="number"
+                            name="price"
+                            value={detail.price}
+                            onChange={(e) => handleReturnChange(index, e)}
+                          />
+                        </>
+                      )}
+                    </Box>
+                  ))}
+                  
+                  <Button
+                    sx={{
+                      backgroundColor: '#634F0C',
+                      '&:hover': {
+                        backgroundColor: '#4a3809'
+                      }
+                    }}
+                    variant="contained"
+                    color="primary"
+                    onClick={handleAddReturnDetail}
+                    style={{ marginTop: '16px' }}
+                  >
+                    Add Return Detail
+                  </Button><br/>
+                </>
+              )}
+              <br/>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Total"
+                variant="outlined"
+                type="number"
+                value={formData.total}
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Returns"
+                variant="outlined"
+                type="number"
+                value={formData.returns}
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Net Total"
+                variant="outlined"
+                type="number"
+                value={formData.netTotal}
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Received By"
+                variant="outlined"
+                name="receivedBy"
+                value={formData.receivedBy}
+                onChange={handleChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Sales Reference By"
+                variant="outlined"
+                name="salesRefBy"
+                value={formData.salesRefBy}
+                onChange={handleChange}
+              />
+              <Button
+                sx={{
+                  backgroundColor: '#634F0C',
+                  '&:hover': {
+                    backgroundColor: '#4a3809'
+                  }
+                }}
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ marginTop: '16px' }}
+              >
+                Submit
+              </Button>
+            </form>
+          </Box>
+        </Container>
+      </Box>
     </>
   );
 };
