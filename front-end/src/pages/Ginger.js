@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "../components/Header"; // Import the header 
 
 const Ginger = () => {
   const [data, setData] = useState([]);
@@ -60,17 +61,19 @@ const Ginger = () => {
   ];
 
   return (
+    <>
+      <ResponsiveAppBar />
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Ginger
       </Typography>
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         onClick={() => navigate("/MainStore")}
       >
         Back to Store
-      </Button>
+      </Button> */}
       <Box sx={{ height: 400, width: '100%', marginTop: "20px" }}>
         <DataGrid
           rows={data}
@@ -95,6 +98,7 @@ const Ginger = () => {
         }
       `}</style>
     </Box>
+    </>
   );
 };
 

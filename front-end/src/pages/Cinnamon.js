@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "../components/Header"; // Import the header component
 
 const Cinnamon = () => {
   const [data, setData] = useState([]);
@@ -60,41 +61,44 @@ const Cinnamon = () => {
   ];
 
   return (
-    <Box sx={{ padding: "20px" }}>
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Cinnamon
-      </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => navigate("/MainStore")}
-      >
-        Back to Store
-      </Button>
-      <Box sx={{ height: 400, width: '100%', marginTop: "20px" }}>
-        <DataGrid
-          rows={data}
-          columns={columns}
-          pageSizeOptions={[5, 10]}
-          getRowClassName={(params) =>
-            params.row.storeType === "IN" ? "row-in" : "row-out"
+    <>
+      <ResponsiveAppBar /> {/* Include the header component */}
+      <Box sx={{ padding: "20px" }}>
+        <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+          Cinnamon
+        </Typography>
+        {/* <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/MainStore")}
+        >
+          Back to Store
+        </Button> */}
+        <Box sx={{ height: 400, width: '100%', marginTop: "20px" }}>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSizeOptions={[5, 10]}
+            getRowClassName={(params) =>
+              params.row.storeType === "IN" ? "row-in" : "row-out"
+            }
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+          />
+        </Box>
+        <style>{`
+          .row-in {
+            background-color: #FFFACD;
           }
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-        />
+          .row-out {
+            background-color: #D3D3D3;
+          }
+        `}</style>
       </Box>
-      <style>{`
-        .row-in {
-          background-color: #FFFACD;
-        }
-        .row-out {
-          background-color: #D3D3D3;
-        }
-      `}</style>
-    </Box>
+    </>
   );
 };
 

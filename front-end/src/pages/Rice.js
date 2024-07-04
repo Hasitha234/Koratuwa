@@ -4,8 +4,9 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "../components/Header"; // Import the header 
 
-const Cardamom = () => {
+const Rice = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -19,8 +20,8 @@ const Cardamom = () => {
         const filteredData = data
           .filter(
             (item) =>
-              item.stockSpicesTypeIn === "Cardamom" ||
-              item.stockSpicesTypeOut === "Cardamom"
+              item.stockSpicesTypeIn === "Rice" ||
+              item.stockSpicesTypeOut === "Rice"
           )
           .map((item, index) => ({
             id: index + 1, // Add an id field for DataGrid
@@ -60,17 +61,19 @@ const Cardamom = () => {
   ];
 
   return (
+    <>
+      <ResponsiveAppBar />
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-        Cardamom
+        Rice
       </Typography>
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         onClick={() => navigate("/MainStore")}
       >
         Back to Store
-      </Button>
+      </Button> */}
       <Box sx={{ height: 400, width: '100%', marginTop: "20px" }}>
         <DataGrid
           rows={data}
@@ -95,7 +98,8 @@ const Cardamom = () => {
         }
       `}</style>
     </Box>
+    </>
   );
 };
 
-export default Cardamom;
+export default Rice;
