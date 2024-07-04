@@ -45,7 +45,6 @@ const StoreIn = () => {
     remarkIn: "",
   });
   const [alertVisible, setAlertVisible] = useState(false);
-
   const navigate = useNavigate();
 
   const handleChangeStoreIn = (event) => {
