@@ -10,6 +10,7 @@ import Chip from '@mui/material/Chip';
 
 const predefinedTypes = ['50g', '100g', '200g', '500g', '1kg', '2kg', '5kg', '10kg'];
 const predefinedReturnOptions = ['Yes', 'No'];
+const productOptions = ['Chilli Pieces', 'Chilli Powder', 'Turmeric Powder', 'Pepper Powder Pack', 'Curry Powder', 'Meat Curry Powder', 'Mustard Powder', 'Mustard Seeds', 'Fenugreek Pack', 'Cinnamon Pack', 'Gamboge Pack', 'Tea Powder', 'Clove Packs', 'Cardamom Packs', 'Suwada Hatha'];
 
 const BillInfo = () => {
   const [formData, setFormData] = useState({
