@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Login from "./pages/MainPage";
 import DashBoard from "./pages/DashBoard";
 import MainStore from "./pages/MainStore";
@@ -45,6 +45,8 @@ import BillInfo from "./pages/BillInfo";
 import Reports from "./pages/Reports";
 import CinnamonPack from "./pages/PackCinnamon";
 import GambogePack from "./pages/PackGamboge";
+import BillHome from "./pages/BillHome";
+import BillViews from "./pages/BillViews";
 
 function App() {
   return (
@@ -95,6 +97,10 @@ function App() {
         <Route path="/fenugreek-pack" element={<FenugreekPack />} />
         <Route path="/cinnamon-pack" element={<CinnamonPack />} />
         <Route path="/gamboge-pack" element={<GambogePack />} />
+        <Route path="/bill-home" element={<BillHome />} />
+        <Route path="/bill-views" element={<BillViews />} />
+
+        
       </Routes>
     </Router>
   );

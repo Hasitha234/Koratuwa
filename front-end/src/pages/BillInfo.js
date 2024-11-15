@@ -203,6 +203,7 @@ const BillInfo = () => {
   return (
     <>
       <ResponsiveAppBar />
+      <br/>
       <Box
         sx={{
           display: 'flex',

@@ -3,7 +3,7 @@ import React from "react";
 import backgroundImage from "../images/123.jpg"; // Adjust the path as needed
 import ResponsiveAppBar from "../components/Header";
 
-function Home() {
+function BillHome() {
   const styles = {
     container: {
       display: "flex",
@@ -59,7 +59,7 @@ function Home() {
       <div style={styles.buttonContainer}>
         <button
           style={styles.button}
-          onClick={() => (window.location.href = "/MainStore")}
+          onClick={() => (window.location.href = "/BillInfo")}
           onMouseEnter={(e) =>
             (e.currentTarget.style.backgroundColor =
               styles.buttonHover.backgroundColor)
@@ -69,11 +69,11 @@ function Home() {
               styles.button.backgroundColor)
           }
         >
-          Main Store
+          Save Bill
         </button>
         <button
           style={styles.button}
-          onClick={() => (window.location.href = "/PackingStore")}
+          onClick={() => (window.location.href = "/bill-views")}
           onMouseEnter={(e) =>
             (e.currentTarget.style.backgroundColor =
               styles.buttonHover.backgroundColor)
@@ -83,26 +83,13 @@ function Home() {
               styles.button.backgroundColor)
           }
         >
-          Packing Store
+          Bill Information
         </button>
-        <button
-          style={styles.button}
-          onClick={() => (window.location.href = "/bill-home")}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor =
-              styles.buttonHover.backgroundColor)
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor =
-              styles.button.backgroundColor)
-          }
-        >
-          Billing
-        </button>
+        
       </div>
     </div>
     </>
   );
 }
 
-export default Home;
+export default BillHome;
